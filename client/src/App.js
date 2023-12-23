@@ -1,33 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [link, setLink] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [shortLinkID, setShortLinkID] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents the form from submitting and refreshing the page
-    // Use the 'link' state variable as needed, e.g., send it to an API, perform an action, etc.
-
-    console.log("Link submitted:", link);
+  const uploadLink = async () => {
+    try {
+      const res = await axios.post("/api", {
+        url: inputValue,
+      });
+      setShortLinkID(res.data.id);
+    } catch (error) {
+      console.error("Error uploading link:", error);
+    }
   };
 
-  const handleInputChange = (event) => {
-    setLink(event.target.value);
-    console.log(link);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    uploadLink();
+    console.log("Form submitted with value:", inputValue);
   };
+
+  // const handleChange = (event) => {
+  //   setInputValue(event.target.value);
+  //   console.log(inputValue);
+  // };
+
+  const handlePaste = (event) => {
+    const pastedValue = event.clipboardData.getData("text");
+    console.log("Pasted value:", pastedValue);
+    setInputValue(pastedValue);
+    console.log(inputValue);
+  };
+
+  const fetchShortUrl = async () => {
+    try {
+     await axios.get(`/api/${shortLinkID}`);
+    } catch (error) {
+      console.error("Error fetching link:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchShortUrl();
+  }, [fetchShortUrl]);
 
   return (
     <div className="App">
       <div className="container">
         <div className="input-box">
           <form onSubmit={handleSubmit}>
-            <label htmlFor="link">Paste Link:</label>
+            <h3>Url Shortner</h3>
             <input
               type="text"
-              value={link}
-              id="link"
-              onChange={handleInputChange}
+              value={inputValue}
+              onPaste={handlePaste}
+              // onChange={handleChange}
+              placeholder="Paste link here..."
             />
+            <h4>http://localhost:5000/api/{shortLinkID}</h4>
             <button type="submit">Submit</button>
           </form>
         </div>

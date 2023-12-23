@@ -1,5 +1,47 @@
-*{
+* {
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
+.container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  margin: auto;
+  justify-content: center;
+  background-color: bisque;
+}
+
+.input-box {
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: rgb(235, 199, 155);
+}
+
+.input-box form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+  width: 500px;
+  background-color: rgb(235, 199, 155);
+}
+
+input{
+  /* border: 0px solid; */
+  padding: 5px;
+}
+
+button{
+  padding: 5px;
+}
+
+input:focus{
+  outline: none;
+}
+
+input::placeholder {
+  font: 0.5rem;
+}
