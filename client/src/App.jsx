@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -7,7 +8,7 @@ function App() {
 
   const uploadLink = async () => {
     try {
-      const res = await axios.post("/api", {
+      const res = await axios.post(`${BASE_URL}`, {
         url: inputValue,
       });
       setShortLinkID(res.data.id);
@@ -28,7 +29,7 @@ function App() {
 
   const fetchShortUrl = useCallback(async () => {
     try {
-      await axios.get(`/api/${shortLinkID}`);
+      await axios.get(`${BASE_URL}/${shortLinkID}`);
     } catch (error) {
       console.error("Error fetching link:", error);
     }
@@ -51,7 +52,7 @@ function App() {
               // onChange={handleChange}
               placeholder="Paste link here..."
             />
-            <h4>http://localhost:5000/api/{shortLinkID}</h4>
+            <h4>{`${BASE_URL}/${shortLinkID}`}</h4>
             <button type="submit">Submit</button>
           </form>
         </div>
