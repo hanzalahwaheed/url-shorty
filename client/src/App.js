@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 function App() {
@@ -34,13 +34,13 @@ function App() {
     console.log(inputValue);
   };
 
-  const fetchShortUrl = async () => {
+  const fetchShortUrl = useCallback(async () => {
     try {
-     await axios.get(`/api/${shortLinkID}`);
+      await axios.get(`/api/${shortLinkID}`);
     } catch (error) {
       console.error("Error fetching link:", error);
     }
-  };
+  }, [shortLinkID]);
 
   useEffect(() => {
     fetchShortUrl();
