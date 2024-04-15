@@ -19,19 +19,11 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     uploadLink();
-    console.log("Form submitted with value:", inputValue);
   };
-
-  // const handleChange = (event) => {
-  //   setInputValue(event.target.value);
-  //   console.log(inputValue);
-  // };
 
   const handlePaste = (event) => {
     const pastedValue = event.clipboardData.getData("text");
-    console.log("Pasted value:", pastedValue);
     setInputValue(pastedValue);
-    console.log(inputValue);
   };
 
   const fetchShortUrl = useCallback(async () => {

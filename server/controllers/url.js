@@ -28,9 +28,5 @@ export const getShortUrl = async (req, res) => {
       },
     }
   );
-
-  console.log("shortId", shortId);
-  console.log("entry", entry);
-
   res.redirect(entry.reDirectUrl);
 };
